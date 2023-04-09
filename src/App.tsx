@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState, useContext } from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import ErrorPage from "./pages/ErrorPage";
 import ReactDOM from "react-dom/client";
 import Login from "pages/Login";
 import StoryTime from "pages/StoryTime";
 import "styles/index.css";
+import UserContext from "context/UserContext";
 
 const router = createBrowserRouter([
   {
@@ -20,5 +21,19 @@ const router = createBrowserRouter([
 ]);
 
 export default function App() {
-  return <RouterProvider router={router} />;
+  const [username, setUsername] = useState<string>();
+  const [room, setRoom] = useState<string>();
+
+  const contextValue = {
+    username,
+    setUsername,
+    room,
+    setRoom,
+  };
+
+  return (
+    <UserContext.Provider value={contextValue}>
+      <RouterProvider router={router} />
+    </UserContext.Provider>
+  );
 }
