@@ -112,6 +112,8 @@ body > #root > div {
 
 .story {
   width: 80%;
+  padding: 1em;
+  height: 80%;
 }
 
 .leave {
@@ -124,6 +126,33 @@ body > #root > div {
   height: 80%;
   /* background-color: #170b3b; */
   border-radius: 1.2em;
+}
+.message {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.message-outer-container {
+  display: flex;
+  width: 90%;
+  padding: 0 0.4em;
+}
+
+.message-container {
+  padding: 1em;
+  background-color: rgb(133, 222, 213);
+
+  width: fit-content;
+  max-width: 50%;
+  border-radius: 1em;
+
+  margin-bottom: 1em;
+}
+
+.message-name-time-container {
+  width: 10%;
+  max-width: 100px;
 }
 
 .title {
@@ -146,5 +175,17 @@ body > #root > div {
 
 .body {
   font-family: "Roboto Slab";
-  font-weight: 200;
+  font-weight: 100;
+  color: white;
+  font-size: 1em;
+  width: fit-content;
+}
+
+.small {
+  color: white;
+  margin: 0;
+  font-family: "Anuphan", sans-serif;
+  font-weight: 100;
+  font-size: 0.9em;
+  width: fit-content;
 }
