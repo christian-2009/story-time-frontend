@@ -45,15 +45,11 @@ function Login() {
   const joinRoom = (e: FormEvent) => {
     e.preventDefault();
 
-    console.log(`[cs] in here`);
     if (room && username) {
       socket.emit("join_room", { username, room });
       navigate("/story-time");
     }
   };
-
-  console.log(`[cs] username`, username);
-  console.log(`[cs] room`, room);
 
   return (
     <div className="app">

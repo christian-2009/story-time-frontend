@@ -4,7 +4,7 @@ import ErrorPage from "./pages/ErrorPage";
 import ReactDOM from "react-dom/client";
 import Login from "pages/Login";
 import StoryTime from "pages/StoryTime";
-import "styles/index.css";
+import "styles/index.scss";
 import UserContext from "context/UserContext";
 
 const router = createBrowserRouter([

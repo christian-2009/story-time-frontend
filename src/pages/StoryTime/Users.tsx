@@ -8,7 +8,7 @@ export default function Users() {
         Users
       </Text.Subtitle>
       <div className="users"></div>
-      <Button text="Leave" />
+      <Button text="Leave" optionalStyles={{ marginTop: 0 }} />
     </div>
   );
 }
