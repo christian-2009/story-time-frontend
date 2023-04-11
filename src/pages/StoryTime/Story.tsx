@@ -52,6 +52,7 @@ export default function Story() {
         ]
           ? colorOptions[message.username as keyof typeof colorOptions]
           : colorOptions.otherName;
+
         return (
           <div className="message">
             <div
@@ -66,9 +67,7 @@ export default function Story() {
                   backgroundColor: colorOption.backgroundColor,
                 }}
               >
-                <Text.Body
-                  optionalStyles={colorOption.textColor as React.CSSProperties}
-                >
+                <Text.Body optionalStyles={{ color: colorOption.textColor }}>
                   {message.message}
                 </Text.Body>
               </div>

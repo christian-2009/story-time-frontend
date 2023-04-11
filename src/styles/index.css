@@ -110,8 +110,12 @@ body > #root > div {
   border-top: 2px solid white;
 }
 
-.story {
+.story-container-story-chat {
   width: 80%;
+}
+
+.story {
+  width: 100%;
   padding: 1em;
   height: 80%;
 }
@@ -153,6 +157,10 @@ body > #root > div {
 .message-name-time-container {
   width: 10%;
   max-width: 100px;
+}
+
+.chat {
+  height: 100%;
 }
 
 .title {
