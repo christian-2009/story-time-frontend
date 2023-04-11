@@ -12,7 +12,7 @@ import React, {
 import UserContext from "context/UserContext";
 import { socket } from "socket";
 import { useNavigate } from "react-router-dom";
-import Title from "components/Title";
+import Text from "components/Text";
 
 function Login() {
   const navigate = useNavigate();
@@ -58,7 +58,7 @@ function Login() {
   return (
     <div className="app">
       <div className="login-container">
-        <Title />
+        <Text.Title />
         <div className="input-containers">
           <form onSubmit={joinRoom}>
             <input
