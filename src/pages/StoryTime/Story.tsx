@@ -2,8 +2,7 @@ import { MessagesReceivedType } from "interfaces";
 import React, { useEffect, useState, useContext } from "react";
 import { socket } from "socket";
 import UserContext from "context/UserContext";
-import Body from "components/Body";
-import SmallText from "components/SmallText";
+import Text from "components/Text";
 
 export default function Story() {
   const { username } = useContext(UserContext);
@@ -67,12 +66,16 @@ export default function Story() {
                   backgroundColor: colorOption.backgroundColor,
                 }}
               >
-                <Body color={colorOption.textColor}>{message.message}</Body>
+                <Text.Body
+                  optionalStyles={colorOption.textColor as React.CSSProperties}
+                >
+                  {message.message}
+                </Text.Body>
               </div>
             </div>
             <div className="message-name-time-container">
-              <SmallText>{message.username}</SmallText>
-              <SmallText>{message.currentTime}</SmallText>
+              <Text.SmallText>{message.username}</Text.SmallText>
+              <Text.SmallText>{message.currentTime}</Text.SmallText>
             </div>
           </div>
         );
