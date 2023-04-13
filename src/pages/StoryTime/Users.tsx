@@ -8,7 +8,16 @@ export default function Users() {
         Users
       </Text.Subtitle>
       <div className="users"></div>
-      <Button text="Leave" />
+      <div
+        style={{
+          display: "flex",
+          flex: "1 1 auto",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        <Button text="Leave" optionalStyles={{ marginTop: 0 }} />
+      </div>
     </div>
   );
 }
