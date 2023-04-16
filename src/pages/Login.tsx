@@ -46,6 +46,7 @@ function Login() {
     e.preventDefault();
 
     if (room && username) {
+      console.log(`[cs] room`, room);
       socket.emit("join_room", { username, room });
       navigate("/story-time");
     }

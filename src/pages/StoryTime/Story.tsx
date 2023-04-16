@@ -1,31 +1,40 @@
-import { MessagesReceivedType } from "interfaces";
+import { MessagesReceivedType, MessagesType } from "interfaces";
 import React, { useEffect, useState, useContext } from "react";
 import { socket } from "socket";
 import UserContext from "context/UserContext";
 import Text from "components/Text";
+import { formatDateFromTimestamp, sortMessages } from "utils";
 
 export default function Story() {
   const { username } = useContext(UserContext);
-  const [messagesReceived, setMessagesReceived] = useState<
-    MessagesReceivedType[]
-  >([]);
+  const [messagesReceived, setMessagesReceived] = useState<MessagesType[]>([]);
 
   useEffect(() => {
     socket.on("receive_message", (data: MessagesReceivedType) => {
-      console.log(data);
       setMessagesReceived((state) => [
         ...state,
         {
           message: data.message,
           username: data.username,
-          currentTime: data.currentTime,
+          __createdtime__: data.__createdtime__,
         },
       ]);
+    });
+    return () => {
+      socket.off("receive_message");
+    };
+  }, [socket]);
+
+  useEffect(() => {
+    socket.on("last_100_messages", (data: any) => {
+      const last100Messages = JSON.parse(data);
+      const sortedData = sortMessages(last100Messages);
+      setMessagesReceived([...sortedData, ...data]);
     });
 
     // Remove event listener on component unmount
     return () => {
-      socket.off("receive_message");
+      socket.off("last_100_messages");
     };
   }, [socket]);
 
@@ -74,7 +83,9 @@ export default function Story() {
             </div>
             <div className="message-name-time-container">
               <Text.SmallText>{message.username}</Text.SmallText>
-              <Text.SmallText>{message.currentTime}</Text.SmallText>
+              <Text.SmallText>
+                {formatDateFromTimestamp(message.__createdtime__)}
+              </Text.SmallText>
             </div>
           </div>
         );

@@ -8,7 +8,14 @@ export interface UsernameContextType {
 export interface MessagesReceivedType {
   message: string;
   username: string;
-  currentTime: string;
+  __createdtime__: string;
+  __updatedtime__: string;
+}
+
+export interface MessagesType {
+  message: string;
+  username: string;
+  __createdtime__: string;
 }
 
 const testMessages = [
