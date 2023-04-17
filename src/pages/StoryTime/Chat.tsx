@@ -9,9 +9,9 @@ export default function Chat() {
 
   const onSubmit = () => {
     if (message !== "") {
-      const currentTime = Date.now();
+      const __createdtime__ = Date.now();
       // Send message to server. We can't specify who we send the message to from the frontend. We can only send to server. Server can then send message to rest of users in room
-      socket.emit("send_message", { username, room, message });
+      socket.emit("send_message", { username, room, message, __createdtime__ });
       setMessage("");
     }
   };

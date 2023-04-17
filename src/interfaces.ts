@@ -18,6 +18,12 @@ export interface MessagesType {
   __createdtime__: string;
 }
 
+export interface User {
+  id: string;
+  room: string;
+  username: string;
+}
+
 const testMessages = [
   {
     message: "hiya",

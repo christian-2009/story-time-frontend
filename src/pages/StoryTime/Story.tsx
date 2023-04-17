@@ -1,13 +1,14 @@
 import { MessagesReceivedType, MessagesType } from "interfaces";
-import React, { useEffect, useState, useContext } from "react";
+import React, { useEffect, useState, useContext, useRef } from "react";
 import { socket } from "socket";
 import UserContext from "context/UserContext";
 import Text from "components/Text";
 import { formatDateFromTimestamp, sortMessages } from "utils";
 
 export default function Story() {
-  const { username } = useContext(UserContext);
+  const { username, room } = useContext(UserContext);
   const [messagesReceived, setMessagesReceived] = useState<MessagesType[]>([]);
+  const messagesColumnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     socket.on("receive_message", (data: MessagesReceivedType) => {
@@ -27,9 +28,10 @@ export default function Story() {
 
   useEffect(() => {
     socket.on("last_100_messages", (data: any) => {
+      console.log(`[cs] data`, data);
       const last100Messages = JSON.parse(data);
       const sortedData = sortMessages(last100Messages);
-      setMessagesReceived([...sortedData, ...data]);
+      setMessagesReceived([...sortedData, ...messagesReceived]);
     });
 
     // Remove event listener on component unmount
@@ -37,6 +39,24 @@ export default function Story() {
       socket.off("last_100_messages");
     };
   }, [socket]);
+
+  useEffect(() => {
+    if (messagesColumnRef.current)
+      messagesColumnRef.current.scrollTop =
+        messagesColumnRef?.current?.scrollHeight;
+  }, [messagesReceived]);
+
+  useEffect(() => {
+    //todo: boot user out of page on refresh
+    window.addEventListener("beforeunload", reinitialiseConnection);
+    return () => {
+      window.removeEventListener("beforeunload", reinitialiseConnection);
+    };
+  }, []);
+
+  const reinitialiseConnection = () => {
+    socket.emit("join_room", { username, room });
+  };
 
   const lowerCaseUsername = username?.toLowerCase() as string;
 
@@ -53,8 +73,10 @@ export default function Story() {
     },
   };
 
+  console.log(`[cs] messagesReceived`, messagesReceived);
+
   return (
-    <div className="story">
+    <div className="story" ref={messagesColumnRef}>
       {messagesReceived.map((message) => {
         const colorOption = colorOptions[
           message.username as keyof typeof colorOptions
