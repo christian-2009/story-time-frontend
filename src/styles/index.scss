@@ -111,28 +111,38 @@ body > #root > div {
   height: 100%;
   display: flex;
   flex-direction: column;
+  //background-color: red;
 }
 
 .story-container {
   flex: 1 1 auto;
-  height: 100%;
+  // display: flex;
+  // justify-content: center;
+  height: 85%;
+  border-top: 2px solid white;
+  //background-color: blue;
+}
+
+.story-container-flex {
   display: flex;
   justify-content: center;
-
-  border-top: 2px solid white;
+  height: 100%;
 }
 
 .story-container-story-chat {
   width: 80%;
+  flex: 1 1 auto;
   display: flex;
-
-  flex-flow: column;
+  //background-color: green;
+  flex-direction: column;
 }
 
 .story {
   width: 100%;
   padding: 1em;
-  height: 80%;
+  height: 70%;
+
+  overflow: scroll;
 }
 
 .leave {
@@ -141,10 +151,11 @@ body > #root > div {
   padding: 0 1em;
   display: flex;
   flex-direction: column;
+  //background-color: lightblue;
 }
 
 .users {
-  height: 80%;
+  height: 60%;
 
   /* background-color: #170b3b; */
   border-radius: 1.2em;
@@ -184,6 +195,7 @@ body > #root > div {
   justify-content: center;
   align-items: center;
   padding: 0 1em;
+  //background-color: blue;
 }
 
 .title {

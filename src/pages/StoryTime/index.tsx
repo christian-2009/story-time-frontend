@@ -9,10 +9,12 @@ export default function () {
     <div className="container">
       <Text.Title />
       <div className="story-container">
-        <Users />
-        <div className="story-container-story-chat">
-          <Story />
-          <Chat />
+        <div className="story-container-flex">
+          <Users />
+          <div className="story-container-story-chat">
+            <Story />
+            <Chat />
+          </div>
         </div>
       </div>
     </div>
