@@ -40,7 +40,6 @@ function Login() {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       roomRef?.current?.focus();
-      console.log(`[cs] should've focused`);
     }
   };
 
@@ -48,8 +47,11 @@ function Login() {
     e.preventDefault();
 
     if (room && username) {
-      console.log(`[cs] room`, room);
-      socket.emit("join_room", { username, room });
+      try {
+        socket.emit("join_room", { username, room });
+      } catch (e) {
+        console.log(`[cs] e`, e);
+      }
       navigate("/story-time");
     }
   };
