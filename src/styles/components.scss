@@ -1,0 +1,43 @@
+.title {
+  color: black;
+  align-self: flex-start;
+  margin: 0;
+  font-family: "Abril Fatface", sans-serif;
+  font-weight: 100;
+  font-size: calc(30px + 4vmax);
+  flex: 0 1 auto;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.subtitle {
+  color: white;
+  margin: 0;
+  font-family: "Courier Prime", sans-serif;
+  font-weight: 100;
+  font-size: 2em;
+}
+
+.body {
+  font-family: "Courier Prime";
+  font-weight: 100;
+  color: white;
+  font-size: 1em;
+  width: fit-content;
+}
+
+.body-large {
+  font-family: "Courier Prime";
+  font-weight: 100;
+  color: black;
+  font-size: 1.2em;
+  width: fit-content;
+}
+
+.small {
+  color: white;
+  margin: 0;
+  font-family: "Courier Prime", sans-serif;
+  font-weight: 100;
+  font-size: 0.9em;
+  width: fit-content;
+}

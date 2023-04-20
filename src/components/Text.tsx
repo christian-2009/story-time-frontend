@@ -35,6 +35,14 @@ const Body = ({ children, optionalStyles }: Props) => {
   );
 };
 
+const BodyLarge = ({ children, optionalStyles }: Props) => {
+  return (
+    <h1 className="body-large" style={optionalStyles}>
+      {children}
+    </h1>
+  );
+};
+
 const SmallText = ({ children, optionalStyles }: Props) => {
   return (
     <h1 className="small" style={optionalStyles}>
@@ -47,6 +55,7 @@ const Text = {
   Title,
   Subtitle,
   Body,
+  BodyLarge,
   SmallText,
 };
 

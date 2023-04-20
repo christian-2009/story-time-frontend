@@ -6,6 +6,8 @@ body {
   min-height: 100%;
   margin: 0;
   padding: 0;
+  background-image: url(../images/background.jpg);
+  background-size: cover;
 }
 
 * {
@@ -32,20 +34,22 @@ body > #root > div {
 .login-container {
   display: flex;
   padding: 4em 1em;
-  width: 30%;
+  width: 40%;
   min-width: 400px;
   margin: auto auto;
   flex-direction: column;
-  border: 2px solid white;
-  border-radius: 2em;
+  border-radius: 1em;
   align-items: center;
+  background-color: #f0ead6;
+  box-shadow: 3px 3px 10px rgb(0 0 0 / 0.2);
 }
 
 .input-containers {
   width: 80%;
+  margin-top: 2%;
   display: flex;
   flex-direction: column;
-
+  position: relative;
   justify-content: center;
   align-items: center;
 }
@@ -56,12 +60,19 @@ body > #root > div {
   height: 3em;
   border-radius: 0.5em;
   border-color: transparent;
-  padding: 5px;
+  padding: 1em 0.2em 0 0.2em;
   box-sizing: border-box;
   font-size: 16px;
   margin-top: 1em;
-  font-family: "Anuphan", sans-serif;
+  font-family: "Courier Prime", sans-serif;
+  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+  -moz-box-sizing: border-box; /* Firefox, other Gecko */
+  box-sizing: border-box;
 }
+
+// .login-input::content {
+//   padding: 0.2em;
+// }
 
 .text-area {
   @extend .login-input;
@@ -74,12 +85,38 @@ body > #root > div {
   border-radius: 0;
 }
 
-.login-input::placeholder {
-  font-family: "Anuphan", sans-serif;
+.login-input:focus {
+  font-family: "Courier Prime", sans-serif;
+  outline: none;
 }
 
-.login-input:focus {
-  font-family: "Anuphan", sans-serif;
+.input-container {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  justify-content: center;
+  align-items: center;
+}
+
+.input-container label {
+  position: absolute;
+  pointer-events: none;
+  transform: translate(0, 0.5em) scale(1);
+  transform-origin: top left;
+  transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+  color: black;
+  font-family: "Courier Prime", sans-serif;
+  font-size: 16px;
+  left: 0.3em;
+}
+
+.input-container:focus-within label {
+  transform: translate(0, -0.1em) scale(0.75);
+}
+
+.input-container .active {
+  transform: translate(0, -0.1em) scale(0.75);
 }
 
 .login-button {
@@ -90,21 +127,19 @@ body > #root > div {
   padding: 0 2%;
   font-size: 16px;
   margin-top: 1rem;
-  background-image: linear-gradient(
-    to bottom right,
-    rgba(52, 25, 72, 1),
-    rgba(23, 11, 59, 1)
-  );
-  color: white;
-  font-family: "Anuphan", sans-serif;
+  // background-image: linear-gradient(
+  //   to bottom right,
+
+  //   rgba(214, 220, 240, 1)
+  // );
+
+  background-color: #9eacdc;
+  color: black;
+  font-family: "Courier Prime", sans-serif;
 }
 
 .login-button:hover {
-  background-image: linear-gradient(
-    to bottom right,
-    rgba(52, 25, 72, 0.8),
-    rgba(23, 11, 59, 0.8)
-  );
+  background-color: #d6dcf0;
 }
 
 .container {
@@ -196,39 +231,4 @@ body > #root > div {
   align-items: center;
   padding: 0 1em;
   //background-color: blue;
-}
-
-.title {
-  color: white;
-  align-self: flex-start;
-  margin: 0;
-  font-family: "Anuphan", sans-serif;
-  font-weight: 100;
-  font-size: 3.5em;
-  flex: 0 1 auto;
-}
-
-.subtitle {
-  color: white;
-  margin: 0;
-  font-family: "Anuphan", sans-serif;
-  font-weight: 100;
-  font-size: 2em;
-}
-
-.body {
-  font-family: "Roboto Slab";
-  font-weight: 100;
-  color: white;
-  font-size: 1em;
-  width: fit-content;
-}
-
-.small {
-  color: white;
-  margin: 0;
-  font-family: "Anuphan", sans-serif;
-  font-weight: 100;
-  font-size: 0.9em;
-  width: fit-content;
 }

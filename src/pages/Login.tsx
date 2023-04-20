@@ -13,6 +13,7 @@ import UserContext from "context/UserContext";
 import { socket } from "socket";
 import { useNavigate } from "react-router-dom";
 import Text from "components/Text";
+import Input from "components/Input";
 
 function Login() {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ function Login() {
   const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Enter") {
       roomRef?.current?.focus();
+      console.log(`[cs] should've focused`);
     }
   };
 
@@ -52,28 +54,46 @@ function Login() {
     }
   };
 
+  const loginIntroText = `This is a simple web app that will allow you to make cool stories with a friend.\n\n\Simply create a simple username and join or create a room. Then you will each take it in turn to write sentences to a short story. \n\n\The only limitation is your own imagination. Go wild!`;
+
   return (
     <div className="app">
       <div className="login-container">
         <Text.Title />
         <div className="input-containers">
-          <form onSubmit={joinRoom}>
-            <input
-              className="login-input"
-              placeholder="Username"
-              name="username"
+          <Text.Body
+            optionalStyles={{
+              color: "black",
+              whiteSpace: "pre-wrap",
+            }}
+          >
+            {loginIntroText}
+          </Text.Body>
+          <form style={{ width: "100%" }} onSubmit={joinRoom}>
+            <Input
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               value={username}
-              type={"text"}
-            ></input>
-            <input
-              className="login-input"
-              ref={roomRef}
-              placeholder="Room"
-              name="room"
+              name="username"
+              placeholder="Username"
+            />
+            <Input
               onChange={handleChange}
-            ></input>
+              ref={roomRef}
+              name="room"
+              placeholder="Room"
+              value={room}
+            />
+
+            {/* <div className="input-container">
+              <input
+                className="login-input"
+                ref={roomRef}
+                name="room"
+                onChange={handleChange}
+              ></input>
+              <label className={username !== "" ? "active" : ""}>Room</label>
+            </div> */}
             <button className="login-button" type="submit">
               Join
             </button>

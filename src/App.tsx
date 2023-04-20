@@ -5,6 +5,7 @@ import ReactDOM from "react-dom/client";
 import Login from "pages/Login";
 import StoryTime from "pages/StoryTime";
 import "styles/index.scss";
+import "styles/components.scss";
 import UserContext from "context/UserContext";
 
 const router = createBrowserRouter([
