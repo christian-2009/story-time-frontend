@@ -63,13 +63,13 @@ export default function Story() {
 
   const colorOptions = {
     [lowerCaseUsername]: {
-      backgroundColor: "#014D4E",
-      textColor: "white",
+      backgroundColor: "transparent",
+      textColor: "black",
       justifyContent: "flex-end",
     },
     otherName: {
-      backgroundColor: undefined,
-      textColor: "#341948",
+      backgroundColor: "transparent",
+      textColor: "#6176a0",
       justifyContent: "flex-start",
     },
   };
@@ -94,22 +94,28 @@ export default function Story() {
                   justifyContent: colorOption.justifyContent,
                 }}
               >
-                <div
-                  className="message-container"
-                  style={{
-                    backgroundColor: colorOption.backgroundColor,
-                  }}
-                >
-                  <Text.Body optionalStyles={{ color: colorOption.textColor }}>
+                <div className="message-container">
+                  <Text.BodyLarge
+                    optionalStyles={{
+                      color: colorOption.textColor,
+                      hyphens: "auto",
+                    }}
+                  >
                     {message.message}
-                  </Text.Body>
+                  </Text.BodyLarge>
                 </div>
               </div>
               <div className="message-name-time-container">
-                <Text.SmallText>{message.username}</Text.SmallText>
-                <Text.SmallText>
-                  {formatDateFromTimestamp(message.__createdtime__)}
+                <Text.SmallText
+                  optionalStyles={{ color: colorOption.textColor }}
+                >
+                  {message.username}
                 </Text.SmallText>
+                {/* <Text.SmallText
+                  optionalStyles={{ color: colorOption.textColor }}
+                >
+                  {formatDateFromTimestamp(message.__createdtime__)}
+                </Text.SmallText> */}
               </div>
             </div>
           );

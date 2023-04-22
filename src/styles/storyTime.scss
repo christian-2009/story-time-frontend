@@ -1,11 +1,14 @@
 $grey: rgba(0, 0, 0, 0.08);
+$message-font: 1.5em;
+$background-color: #f0ead6;
+$primary-text: #3f0071;
+$secondary-text: #6176a0;
 
 .container {
   height: 100%;
   display: flex;
   flex-direction: row;
 }
-
 .story-container-flex {
   display: flex;
   justify-content: center;
@@ -18,28 +21,31 @@ $grey: rgba(0, 0, 0, 0.08);
   padding: 0 1em;
   display: flex;
   flex-direction: column;
-  min-width: 100px;
+  min-width: 200px;
 }
 
 .pages {
-  width: 20%;
-  min-width: 100px;
+  width: 25%;
+  min-width: 200px;
   height: 100%;
   //border-left: 2px solid white;
 }
 
 .story {
   flex: 1 1 auto;
+  display: flex;
   flex-direction: column;
   justify-content: space-between;
   justify-self: center;
   align-self: center;
   height: 95%;
   padding: 0 0.5em;
-  min-width: 250px;
-  max-width: 800px;
-  background-color: #f0ead6;
+  min-width: 55%;
+  max-width: 55%;
+  margin: 0 auto;
+  background-color: $background-color;
   border-radius: 1em;
+  box-shadow: 5px 5px 20px rgb(0 0 0 / 0.4);
 }
 
 .story-messages-container {
@@ -51,11 +57,35 @@ $grey: rgba(0, 0, 0, 0.08);
 .chat {
   display: flex;
   flex-direction: column;
-  padding: 1.1em 0;
+  padding: 1em 0 0 0;
   flex: 1 1 auto;
   justify-content: flex-start;
   align-items: flex-start;
-  overflow: hidden;
 
   border-top: 2px solid $grey;
+}
+
+.message {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.message-outer-container {
+  display: flex;
+  width: 86%;
+  padding: 0 0.5em;
+}
+
+.message-container {
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 1em;
+  margin-bottom: 0.5em;
+}
+
+.message-name-time-container {
+  width: 10%;
+  flex: 1 1 auto;
+  max-width: 100px;
 }
