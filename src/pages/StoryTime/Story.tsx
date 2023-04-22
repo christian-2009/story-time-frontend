@@ -4,6 +4,7 @@ import { socket } from "socket";
 import UserContext from "context/UserContext";
 import Text from "components/Text";
 import { formatDateFromTimestamp, sortMessages } from "utils";
+import Chat from "./Chat";
 
 export default function Story() {
   const { username, room } = useContext(UserContext);
@@ -77,41 +78,44 @@ export default function Story() {
 
   return (
     <div className="story" ref={messagesColumnRef}>
-      {messagesReceived.map((message) => {
-        const colorOption = colorOptions[
-          message.username as keyof typeof colorOptions
-        ]
-          ? colorOptions[message.username as keyof typeof colorOptions]
-          : colorOptions.otherName;
+      <div className="story-messages-container">
+        {messagesReceived.map((message) => {
+          const colorOption = colorOptions[
+            message.username as keyof typeof colorOptions
+          ]
+            ? colorOptions[message.username as keyof typeof colorOptions]
+            : colorOptions.otherName;
 
-        return (
-          <div className="message">
-            <div
-              className="message-outer-container"
-              style={{
-                justifyContent: colorOption.justifyContent,
-              }}
-            >
+          return (
+            <div className="message">
               <div
-                className="message-container"
+                className="message-outer-container"
                 style={{
-                  backgroundColor: colorOption.backgroundColor,
+                  justifyContent: colorOption.justifyContent,
                 }}
               >
-                <Text.Body optionalStyles={{ color: colorOption.textColor }}>
-                  {message.message}
-                </Text.Body>
+                <div
+                  className="message-container"
+                  style={{
+                    backgroundColor: colorOption.backgroundColor,
+                  }}
+                >
+                  <Text.Body optionalStyles={{ color: colorOption.textColor }}>
+                    {message.message}
+                  </Text.Body>
+                </div>
+              </div>
+              <div className="message-name-time-container">
+                <Text.SmallText>{message.username}</Text.SmallText>
+                <Text.SmallText>
+                  {formatDateFromTimestamp(message.__createdtime__)}
+                </Text.SmallText>
               </div>
             </div>
-            <div className="message-name-time-container">
-              <Text.SmallText>{message.username}</Text.SmallText>
-              <Text.SmallText>
-                {formatDateFromTimestamp(message.__createdtime__)}
-              </Text.SmallText>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+      <Chat />
     </div>
   );
 }

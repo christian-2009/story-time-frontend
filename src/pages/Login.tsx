@@ -26,7 +26,7 @@ function Login() {
   };
 
   useEffect(() => {
-    if (setRoom) setRoom(undefined);
+    if (setRoom) setRoom("");
   }, []);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
