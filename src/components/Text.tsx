@@ -12,7 +12,7 @@ interface Props {
 const Title = ({ optionalPosition }: TitleProps) => {
   return (
     <div style={{ position: optionalPosition ? optionalPosition : undefined }}>
-      <h1 className="title">Story Time</h1>
+      <h1 className="title">STORY TIME</h1>
     </div>
   );
 };

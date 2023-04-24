@@ -10,7 +10,6 @@ interface Props {
 
 const Input = forwardRef<HTMLInputElement, Props>(
   ({ onChange, onKeyDown, name, value, placeholder }, ref) => {
-    console.log(`[cs] ref`, ref);
     return (
       <div className="input-container">
         <input

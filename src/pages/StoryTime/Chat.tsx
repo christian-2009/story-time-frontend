@@ -1,10 +1,18 @@
-import React, { useState, useContext, KeyboardEventHandler } from "react";
+import React, {
+  useState,
+  useContext,
+  KeyboardEventHandler,
+  useRef,
+} from "react";
 import Button from "components/Button";
 import { socket } from "socket";
 import UserContext from "context/UserContext";
+import Text from "components/Text";
+import TextArea from "components/TextArea";
 
 export default function Chat() {
   const { username, room } = useContext(UserContext);
+  const [isFocused, setIsFocused] = useState<boolean>(false);
   const [message, setMessage] = useState<string>();
 
   const onSubmit = () => {
@@ -25,13 +33,30 @@ export default function Chat() {
 
   return (
     <div className="chat">
-      <textarea
-        className="text-area"
+      <TextArea
+        onSubmit={onSubmit}
         onChange={(e) => setMessage(e.target.value)}
         onKeyDown={onKeyDown}
         value={message}
+        placeholder={"Type Here"}
       />
-      <Button
+      {/* <Text.BodyLarge
+        optionalStyles={{ fontFamily: "Roboto Slab", marginBottom: "10px" }}
+      >
+        Type Here
+      </Text.BodyLarge>
+      <textarea
+        className="text-area"
+        style={{
+          borderBottomColor: isFocused ? "black" : undefined,
+        }}
+        onChange={(e) => setMessage(e.target.value)}
+        onFocus={() => setIsFocused(true)}
+        onBlur={() => setIsFocused(false)}
+        onKeyDown={onKeyDown}
+        value={message}
+      /> */}
+      {/* <Button
         onClick={onSubmit}
         text={"Send"}
         optionalStyles={{
@@ -39,7 +64,7 @@ export default function Chat() {
           marginTop: 0,
           marginLeft: "1.5em",
         }}
-      />
+      /> */}
     </div>
   );
 }

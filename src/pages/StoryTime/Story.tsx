@@ -4,6 +4,7 @@ import { socket } from "socket";
 import UserContext from "context/UserContext";
 import Text from "components/Text";
 import { formatDateFromTimestamp, sortMessages } from "utils";
+import Chat from "./Chat";
 
 export default function Story() {
   const { username, room } = useContext(UserContext);
@@ -62,13 +63,13 @@ export default function Story() {
 
   const colorOptions = {
     [lowerCaseUsername]: {
-      backgroundColor: "#014D4E",
-      textColor: "white",
+      backgroundColor: "transparent",
+      textColor: "black",
       justifyContent: "flex-end",
     },
     otherName: {
-      backgroundColor: undefined,
-      textColor: "#341948",
+      backgroundColor: "transparent",
+      textColor: "#6176a0",
       justifyContent: "flex-start",
     },
   };
@@ -77,41 +78,50 @@ export default function Story() {
 
   return (
     <div className="story" ref={messagesColumnRef}>
-      {messagesReceived.map((message) => {
-        const colorOption = colorOptions[
-          message.username as keyof typeof colorOptions
-        ]
-          ? colorOptions[message.username as keyof typeof colorOptions]
-          : colorOptions.otherName;
+      <div className="story-messages-container">
+        {messagesReceived.map((message) => {
+          const colorOption = colorOptions[
+            message.username as keyof typeof colorOptions
+          ]
+            ? colorOptions[message.username as keyof typeof colorOptions]
+            : colorOptions.otherName;
 
-        return (
-          <div className="message">
-            <div
-              className="message-outer-container"
-              style={{
-                justifyContent: colorOption.justifyContent,
-              }}
-            >
+          return (
+            <div className="message">
               <div
-                className="message-container"
+                className="message-outer-container"
                 style={{
-                  backgroundColor: colorOption.backgroundColor,
+                  justifyContent: colorOption.justifyContent,
                 }}
               >
-                <Text.Body optionalStyles={{ color: colorOption.textColor }}>
-                  {message.message}
-                </Text.Body>
+                <div className="message-container">
+                  <Text.BodyLarge
+                    optionalStyles={{
+                      color: colorOption.textColor,
+                      hyphens: "auto",
+                    }}
+                  >
+                    {message.message}
+                  </Text.BodyLarge>
+                </div>
+              </div>
+              <div className="message-name-time-container">
+                <Text.SmallText
+                  optionalStyles={{ color: colorOption.textColor }}
+                >
+                  {message.username}
+                </Text.SmallText>
+                {/* <Text.SmallText
+                  optionalStyles={{ color: colorOption.textColor }}
+                >
+                  {formatDateFromTimestamp(message.__createdtime__)}
+                </Text.SmallText> */}
               </div>
             </div>
-            <div className="message-name-time-container">
-              <Text.SmallText>{message.username}</Text.SmallText>
-              <Text.SmallText>
-                {formatDateFromTimestamp(message.__createdtime__)}
-              </Text.SmallText>
-            </div>
-          </div>
-        );
-      })}
+          );
+        })}
+      </div>
+      <Chat />
     </div>
   );
 }
