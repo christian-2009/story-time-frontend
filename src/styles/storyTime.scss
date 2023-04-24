@@ -40,11 +40,24 @@ $secondary-text: #6176a0;
   align-self: center;
   height: 95%;
   padding: 0 0.5em;
-  min-width: 55%;
-  max-width: 55%;
+  width: 50%;
+  min-width: 400px;
+  max-width: 700px;
   margin: 0 auto;
   background-color: $background-color;
-  border-radius: 1em;
+  // border-radius: 1em;
+  box-shadow: 5px 5px 20px rgb(0 0 0 / 0.4);
+}
+
+.story-animation {
+  align-self: center;
+  height: 95%;
+  padding: 0 0.5em;
+  width: 50%;
+  min-width: 400px;
+  max-width: 700px;
+  margin: 0 auto;
+  background-color: $background-color;
   box-shadow: 5px 5px 20px rgb(0 0 0 / 0.4);
 }
 
