@@ -3,12 +3,16 @@ import React, { useEffect, useState, useContext, useRef } from "react";
 import { socket } from "socket";
 import UserContext from "context/UserContext";
 import Text from "components/Text";
-import { formatDateFromTimestamp, sortMessages } from "utils";
+import { sortMessages } from "utils";
 import Chat from "./Chat";
+import { motion, useAnimate } from "framer-motion";
 
 export default function Story() {
   const { username, room } = useContext(UserContext);
   const [messagesReceived, setMessagesReceived] = useState<MessagesType[]>([]);
+  const [messagesContainerHeight, setMessagesContainerHeight] =
+    useState<number>();
+  const [scope, animate] = useAnimate();
   const messagesColumnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -42,12 +46,6 @@ export default function Story() {
   }, [socket]);
 
   useEffect(() => {
-    if (messagesColumnRef.current)
-      messagesColumnRef.current.scrollTop =
-        messagesColumnRef?.current?.scrollHeight;
-  }, [messagesReceived]);
-
-  useEffect(() => {
     //todo: boot user out of page on refresh
     window.addEventListener("beforeunload", reinitialiseConnection);
     return () => {
@@ -74,54 +72,105 @@ export default function Story() {
     },
   };
 
-  console.log(`[cs] messagesReceived`, messagesReceived);
+  const [pages, setPages] = useState<number[]>([1]);
+
+  useEffect(() => {
+    if (pages.length > 1) {
+      //TODO: figure out how to make this animation flexible
+      animate(
+        scope.current,
+        {
+          // x: 700,
+          y: -100,
+          left: "60%",
+          rotate: [0, Math.random() * 360],
+          scale: 0.3,
+          zIndex: 1,
+        },
+        { duration: 1 }
+      );
+    }
+  }, [pages]);
 
   return (
-    <div className="story" ref={messagesColumnRef}>
-      <div className="story-messages-container">
-        {messagesReceived.map((message) => {
-          const colorOption = colorOptions[
-            message.username as keyof typeof colorOptions
-          ]
-            ? colorOptions[message.username as keyof typeof colorOptions]
-            : colorOptions.otherName;
+    <>
+      <div className="story" ref={messagesColumnRef}>
+        <div
+          className="story-messages-container"
+          ref={(el) => {
+            if (
+              !messagesContainerHeight &&
+              el?.getBoundingClientRect()?.height
+            ) {
+              setMessagesContainerHeight(el?.getBoundingClientRect()?.height);
+            }
+          }}
+        >
+          {messagesReceived.map((message) => {
+            const colorOption = colorOptions[
+              message.username as keyof typeof colorOptions
+            ]
+              ? colorOptions[message.username as keyof typeof colorOptions]
+              : colorOptions.otherName;
 
-          return (
-            <div className="message">
+            return (
               <div
-                className="message-outer-container"
-                style={{
-                  justifyContent: colorOption.justifyContent,
+                className="message"
+                ref={(el) => {
+                  const currentMessageTopVal = el?.getBoundingClientRect()
+                    ?.top as number;
+                  if (
+                    messagesContainerHeight &&
+                    currentMessageTopVal >= messagesContainerHeight
+                  ) {
+                    setPages((p) => [...p, pages.length + 1]);
+                    setMessagesReceived([]);
+                  }
+                  console.log(
+                    `[cs] el.getBoundClientRect()`,
+                    el?.getBoundingClientRect()
+                  );
                 }}
               >
-                <div className="message-container">
-                  <Text.BodyLarge
-                    optionalStyles={{
-                      color: colorOption.textColor,
-                      hyphens: "auto",
-                    }}
-                  >
-                    {message.message}
-                  </Text.BodyLarge>
-                </div>
-              </div>
-              <div className="message-name-time-container">
-                <Text.SmallText
-                  optionalStyles={{ color: colorOption.textColor }}
+                <div
+                  className="message-outer-container"
+                  style={{
+                    justifyContent: colorOption.justifyContent,
+                  }}
                 >
-                  {message.username}
-                </Text.SmallText>
-                {/* <Text.SmallText
+                  <div className="message-container">
+                    <Text.BodyLarge
+                      optionalStyles={{
+                        color: colorOption.textColor,
+                        hyphens: "auto",
+                      }}
+                    >
+                      {message.message}
+                    </Text.BodyLarge>
+                  </div>
+                </div>
+                <div className="message-name-time-container">
+                  <Text.SmallText
+                    optionalStyles={{ color: colorOption.textColor }}
+                  >
+                    {message.username}
+                  </Text.SmallText>
+                  {/* <Text.SmallText
                   optionalStyles={{ color: colorOption.textColor }}
                 >
                   {formatDateFromTimestamp(message.__createdtime__)}
                 </Text.SmallText> */}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        <Chat />
       </div>
-      <Chat />
-    </div>
+      {pages.map(() => (
+        <div ref={scope} className="story-animation" />
+      ))}
+    </>
   );
 }
