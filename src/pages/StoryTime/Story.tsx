@@ -12,6 +12,8 @@ export default function Story() {
   const [messagesReceived, setMessagesReceived] = useState<MessagesType[]>([]);
   const [messagesContainerHeight, setMessagesContainerHeight] =
     useState<number>();
+  const [pages, setPages] = useState<number[]>([1]);
+  const [story, setStory] = useState<string[]>([]);
   const [scope, animate] = useAnimate();
   const messagesColumnRef = useRef<HTMLDivElement>(null);
 
@@ -72,8 +74,6 @@ export default function Story() {
     },
   };
 
-  const [pages, setPages] = useState<number[]>([1]);
-
   useEffect(() => {
     if (pages.length > 1) {
       //TODO: figure out how to make this animation flexible
@@ -124,20 +124,16 @@ export default function Story() {
                     currentMessageTopVal >= messagesContainerHeight
                   ) {
                     setPages((p) => [...p, pages.length + 1]);
+                    //getting the entire story
+                    setStory([
+                      ...story,
+                      ...messagesReceived.map((m) => m.message),
+                    ]);
                     setMessagesReceived([]);
                   }
-                  console.log(
-                    `[cs] el.getBoundClientRect()`,
-                    el?.getBoundingClientRect()
-                  );
                 }}
               >
-                <div
-                  className="message-outer-container"
-                  style={{
-                    justifyContent: colorOption.justifyContent,
-                  }}
-                >
+                <div className="message-outer-container">
                   <div className="message-container">
                     <Text.BodyLarge
                       optionalStyles={{

@@ -46,7 +46,7 @@ $secondary-text: #6176a0;
   margin: 0 auto;
   background-color: $background-color;
   // border-radius: 1em;
-  box-shadow: 5px 5px 20px rgb(0 0 0 / 0.4);
+  // box-shadow: 5px 5px 20px rgb(0 0 0 / 0.4);
 }
 
 .story-animation {
@@ -66,18 +66,18 @@ $secondary-text: #6176a0;
 
 .story-messages-container {
   height: 84%;
-  overflow-y: scroll;
-  overflow-x: hidden;
+  padding-top: 5px;
+  box-sizing: border-box;
 }
 
 .chat {
   display: flex;
   flex-direction: column;
-  padding: 1em 0 0 0;
+  padding: 0 0 0 0;
   flex: 1 1 auto;
   justify-content: flex-start;
   align-items: flex-start;
-
+  padding-top: 10px;
   border-top: 2px solid $grey;
 }
 
@@ -89,7 +89,7 @@ $secondary-text: #6176a0;
 
 .message-outer-container {
   display: flex;
-  width: 86%;
+  width: 85%;
   padding: 0 0.5em;
 }
 
@@ -101,7 +101,8 @@ $secondary-text: #6176a0;
 }
 
 .message-name-time-container {
-  width: 10%;
+  // width: 10%;
   flex: 1 1 auto;
-  max-width: 100px;
+  display: flex;
+  justify-content: flex-end;
 }
