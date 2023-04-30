@@ -65,19 +65,25 @@ $secondary-text: #6176a0;
 }
 
 .story-messages-container {
-  height: 84%;
+  height: 81%;
   padding-top: 5px;
+
   box-sizing: border-box;
+  overflow-y: scroll;
 }
 
 .chat {
   display: flex;
   flex-direction: column;
-  padding: 0 0 0 0;
+  padding: 0.5rem;
   flex: 1 1 auto;
   justify-content: flex-start;
   align-items: flex-start;
-  padding-top: 10px;
+
+  border-top: 2px solid $grey;
+}
+
+.border-top {
   border-top: 2px solid $grey;
 }
 
