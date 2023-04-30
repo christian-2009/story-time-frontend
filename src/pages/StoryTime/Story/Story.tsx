@@ -6,6 +6,7 @@ import Text from "components/Text";
 import { sortMessages } from "utils";
 import Chat from "./Chat";
 import { motion, useAnimate } from "framer-motion";
+import { flushSync } from "react-dom";
 
 export default function Story() {
   const { username, room } = useContext(UserContext);
@@ -15,19 +16,27 @@ export default function Story() {
   const [pages, setPages] = useState<number[]>([1]);
   const [story, setStory] = useState<string[]>([]);
   const [scope, animate] = useAnimate();
+  const firstRender = useRef(true);
   const messagesColumnRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     socket.on("receive_message", (data: MessagesReceivedType) => {
-      setMessagesReceived((state) => [
-        ...state,
-        {
-          message: data.message,
-          username: data.username,
-          __createdtime__: data.__createdtime__,
-        },
-      ]);
+      flushSync(() => {
+        setMessagesReceived((state) => [
+          ...state,
+          {
+            message: data.message,
+            username: data.username,
+            __createdtime__: data.__createdtime__,
+          },
+        ]);
+      });
+      messagesColumnRef.current?.lastElementChild?.scrollIntoView({
+        behavior: "smooth",
+        block: "end",
+      });
     });
+
     return () => {
       socket.off("receive_message");
     };
@@ -35,7 +44,6 @@ export default function Story() {
 
   useEffect(() => {
     socket.on("last_100_messages", (data: any) => {
-      console.log(`[cs] data`, data);
       const last100Messages = JSON.parse(data);
       const sortedData = sortMessages(last100Messages);
       setMessagesReceived([...sortedData, ...messagesReceived]);
@@ -47,7 +55,15 @@ export default function Story() {
     };
   }, [socket]);
 
+  // useEffect(() => {
+  //   messagesColumnRef.current?.scrollTo({ top: 100 });
+  // }, [messagesReceived]);
+
   useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
+    }
     //todo: boot user out of page on refresh
     window.addEventListener("beforeunload", reinitialiseConnection);
     return () => {
@@ -74,37 +90,37 @@ export default function Story() {
     },
   };
 
-  useEffect(() => {
-    if (pages.length > 1) {
-      //TODO: figure out how to make this animation flexible
-      animate(
-        scope.current,
-        {
-          // x: 700,
-          y: -100,
-          left: "60%",
-          rotate: [0, Math.random() * 360],
-          scale: 0.3,
-          zIndex: 1,
-        },
-        { duration: 1 }
-      );
-    }
-  }, [pages]);
+  // useEffect(() => {
+  //   if (pages.length > 1) {
+  //     //TODO: figure out how to make this animation flexible
+  //     animate(
+  //       scope.current,
+  //       {
+  //         // x: 700,
+  //         y: -100,
+  //         left: "60%",
+  //         rotate: [0, Math.random() * 360],
+  //         scale: 0.3,
+  //         zIndex: 1,
+  //       },
+  //       { duration: 1 }
+  //     );
+  //   }
+  // }, [pages]);
 
   return (
     <>
-      <div className="story" ref={messagesColumnRef}>
+      <div className="story">
         <div
           className="story-messages-container"
-          ref={(el) => {
-            if (
-              !messagesContainerHeight &&
-              el?.getBoundingClientRect()?.height
-            ) {
-              setMessagesContainerHeight(el?.getBoundingClientRect()?.height);
-            }
-          }}
+          ref={messagesColumnRef}
+          //(el) => {
+          // if (
+          //   !messagesContainerHeight &&
+          //   el?.getBoundingClientRect()?.height
+          // ) {
+          //   setMessagesContainerHeight(el?.getBoundingClientRect()?.height);
+          // }
         >
           {messagesReceived.map((message) => {
             const colorOption = colorOptions[
@@ -116,22 +132,25 @@ export default function Story() {
             return (
               <div
                 className="message"
-                ref={(el) => {
-                  const currentMessageTopVal = el?.getBoundingClientRect()
-                    ?.top as number;
-                  if (
-                    messagesContainerHeight &&
-                    currentMessageTopVal >= messagesContainerHeight
-                  ) {
-                    setPages((p) => [...p, pages.length + 1]);
-                    //getting the entire story
-                    setStory([
-                      ...story,
-                      ...messagesReceived.map((m) => m.message),
-                    ]);
-                    setMessagesReceived([]);
-                  }
-                }}
+                //FUNCTIONALITY TO MOVE THE PAGE
+                // ref={(el) => {
+                //   const currentMessageTopVal = el?.getBoundingClientRect()
+                //     ?.top as number;
+                //   if (
+                //     messagesContainerHeight &&
+                //     currentMessageTopVal >= messagesContainerHeight
+                //   ) {
+                //     if (firstRender.current) {
+                //     }
+                //     setPages((p) => [...p, pages.length + 1]);
+                //     //getting the entire story
+                //     setStory([
+                //       ...story,
+                //       ...messagesReceived.map((m) => m.message),
+                //     ]);
+                //     setMessagesReceived([]);
+                //   }
+                // }}
               >
                 <div className="message-outer-container">
                   <div className="message-container">
@@ -161,12 +180,20 @@ export default function Story() {
             );
           })}
         </div>
+        {/* <button
+          onClick={() =>
+           
+          }
+        >
+          click
+        </button> */}
 
-        <Chat />
+        <Chat messagesReceived={messagesReceived} />
       </div>
-      {pages.map(() => (
+
+      {/* {pages.map(() => (
         <div ref={scope} className="story-animation" />
-      ))}
+      ))} */}
     </>
   );
 }
