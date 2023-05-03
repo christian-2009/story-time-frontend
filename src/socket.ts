@@ -2,7 +2,7 @@ import * as io from "socket.io-client";
 
 const URL =
   process.env.NODE_ENV === "production"
-    ? "https://story-time-backend.vercel.app"
+    ? "https://story-time-2swz.onrender.com"
     : "http://localhost:6379";
 
 // const URL = "https://story-time-2swz.onrender.com";
