@@ -1,4 +1,5 @@
 import React, { ChangeEvent, forwardRef } from "react";
+import Text from "./Text";
 
 interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
@@ -6,10 +7,11 @@ interface Props {
   name: string;
   value: string | undefined;
   placeholder: string;
+  error?: string;
 }
 
 const Input = forwardRef<HTMLInputElement, Props>(
-  ({ onChange, onKeyDown, name, value, placeholder }, ref) => {
+  ({ onChange, onKeyDown, name, value, placeholder, error }, ref) => {
     return (
       <div className="input-container">
         <input
@@ -22,6 +24,13 @@ const Input = forwardRef<HTMLInputElement, Props>(
           type={"text"}
         />
         <label className={value ? "active" : ""}>{placeholder}</label>
+        {error && (
+          <Text.ErrorText
+            optionalStyles={{ alignSelf: "flex-start", marginTop: 2 }}
+          >
+            {error}
+          </Text.ErrorText>
+        )}
       </div>
     );
   }

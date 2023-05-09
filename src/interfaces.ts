@@ -24,6 +24,12 @@ export interface User {
   username: string;
 }
 
+export interface Errors {
+  username?: string;
+  password?: string;
+  room?: string;
+}
+
 const testMessages = [
   {
     message: "hiya",

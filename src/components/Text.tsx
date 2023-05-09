@@ -51,12 +51,21 @@ const SmallText = ({ children, optionalStyles }: Props) => {
   );
 };
 
+const ErrorText = ({ children, optionalStyles }: Props) => {
+  return (
+    <p className="error-text" style={optionalStyles}>
+      {children}
+    </p>
+  );
+};
+
 const Text = {
   Title,
   Subtitle,
   Body,
   BodyLarge,
   SmallText,
+  ErrorText,
 };
 
 export default Text;
