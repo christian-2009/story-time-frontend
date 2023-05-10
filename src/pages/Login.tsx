@@ -144,15 +144,6 @@ function Login() {
               error={errors.password?.message}
             />
 
-            {/* <div className="input-container">
-              <input
-                className="login-input"
-                ref={roomRef}
-                name="room"
-                onChange={handleChange}
-              ></input>
-              <label className={username !== "" ? "active" : ""}>Room</label>
-            </div> */}
             <button className="login-button" type="submit">
               Join
             </button>
