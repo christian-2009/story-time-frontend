@@ -4,9 +4,9 @@ import Text from "./Text";
 interface Props {
   onChange: (e: ChangeEvent<HTMLInputElement>) => void;
   onKeyDown?: React.KeyboardEventHandler<HTMLInputElement>;
-  name: string;
+  name?: string;
   value: string | undefined;
-  placeholder: string;
+  placeholder?: string;
   error?: string;
 }
 

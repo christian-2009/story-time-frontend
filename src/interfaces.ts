@@ -30,6 +30,12 @@ export interface Errors {
   room?: string;
 }
 
+export interface FormInputType {
+  username: string;
+  room: string;
+  password: string;
+}
+
 const testMessages = [
   {
     message: "hiya",

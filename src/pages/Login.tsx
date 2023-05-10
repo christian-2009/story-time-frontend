@@ -2,27 +2,41 @@ import React, {
   ChangeEvent,
   FormEvent,
   KeyboardEvent,
-  KeyboardEventHandler,
-  MutableRefObject,
-  SyntheticEvent,
   useContext,
   useEffect,
   useRef,
+  useState,
 } from "react";
 import UserContext from "context/UserContext";
 import { socket } from "socket";
 import { useNavigate } from "react-router-dom";
 import Text from "components/Text";
 import Input from "components/Input";
+import { Errors, FormInputType } from "interfaces";
+import { useForm } from "react-hook-form";
+import FormInput from "components/FormInput";
 
 function Login() {
   const navigate = useNavigate();
+  const {
+    register,
+    handleSubmit,
+    getValues,
+    formState: { dirtyFields, errors },
+  } = useForm<FormInputType>({
+    defaultValues: { username: "", password: "", room: "" },
+  });
   const roomRef = useRef<HTMLInputElement>(null);
+  const passwordRef = useRef<HTMLInputElement>(null);
   const { username, setUsername, room, setRoom } = useContext(UserContext);
+  const [password, setPassword] = useState<string>();
+
+  const state = [username, room, password];
 
   const setters = {
     username: setUsername,
     room: setRoom,
+    password: setPassword,
   };
 
   useEffect(() => {
@@ -37,20 +51,40 @@ function Login() {
     if (setter) setter(value);
   };
 
-  const handleKeyDown = (e: KeyboardEvent) => {
+  const handleKeyDown = (
+    e: KeyboardEvent,
+    ref: React.RefObject<HTMLInputElement>
+  ) => {
     if (e.key === "Enter") {
-      roomRef?.current?.focus();
+      ref.current?.focus();
     }
   };
 
-  const joinRoom = (e: FormEvent) => {
-    e.preventDefault();
+  const handleErrors = () => {
+    for (const field of state) {
+      console.log(`[cs] [field]`, field);
+      if (!field) {
+        // const errorForField = errorMessage(field);
+        // setErrors({ ...errors, [field]: errorForField });
+      }
+    }
+  };
 
-    if (room && username) {
+  const errorMessage = (field: string) => {
+    return `Must provide a valid ${field}`;
+  };
+
+  const joinRoom = (data: any) => {
+    // e.preventDefault();
+    console.log(`[cs] data`, data);
+    handleErrors();
+    const errorArray = Object.keys(errors);
+
+    if (errorArray?.length === 0 && room && username && password) {
       try {
         socket.emit("join_room", { username, room });
       } catch (e) {
-        console.log(`[cs] e`, e);
+        throw e;
       }
       navigate("/story-time");
     }
@@ -71,20 +105,43 @@ function Login() {
           >
             {loginIntroText}
           </Text.Body>
-          <form style={{ width: "100%" }} onSubmit={joinRoom}>
-            <Input
-              onChange={handleChange}
-              onKeyDown={handleKeyDown}
-              value={username}
-              name="username"
+          <form style={{ width: "100%" }} onSubmit={handleSubmit(joinRoom)}>
+            <FormInput
+              hasContent={dirtyFields.username}
+              onKeyDown={(e) => handleKeyDown(e, roomRef)}
               placeholder="Username"
+              errorsObject={{
+                required: "Username is required.",
+              }}
+              error={errors.username?.message}
+              register={register}
+              label="username"
             />
-            <Input
-              onChange={handleChange}
-              ref={roomRef}
-              name="room"
+            <FormInput
+              hasContent={dirtyFields.room}
+              onKeyDown={(e) => handleKeyDown(e, passwordRef)}
               placeholder="Room"
-              value={room}
+              register={register}
+              label="room"
+              errorsObject={{
+                required: "Room code is required.",
+                pattern: {
+                  value: /(?!^[0-9]*$)(?!^[a-zA-Z]*$)^([a-zA-Z0-9]{6,15})$/,
+                  message: "Room must contain letters and numbers",
+                },
+              }}
+              error={errors.room?.message}
+            />
+            <FormInput
+              hasContent={dirtyFields.password}
+              ref={passwordRef}
+              placeholder="Password"
+              register={register}
+              label="password"
+              errorsObject={{
+                required: "Password is required.",
+              }}
+              error={errors.password?.message}
             />
 
             {/* <div className="input-container">
