@@ -22,6 +22,7 @@ function Login() {
     register,
     handleSubmit,
     getValues,
+    setError,
     formState: { dirtyFields, errors },
   } = useForm<FormInputType>({
     defaultValues: { username: "", password: "", room: "" },
@@ -29,27 +30,23 @@ function Login() {
   const roomRef = useRef<HTMLInputElement>(null);
   const passwordRef = useRef<HTMLInputElement>(null);
   const { username, setUsername, room, setRoom } = useContext(UserContext);
-  const [password, setPassword] = useState<string>();
 
-  const state = [username, room, password];
-
-  const setters = {
-    username: setUsername,
-    room: setRoom,
-    password: setPassword,
-  };
+  // const setters = {
+  //   username: setUsername,
+  //   room: setRoom,
+  // };
 
   useEffect(() => {
     if (setRoom) setRoom("");
   }, []);
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    e.preventDefault();
-    const value = e.target.value;
-    const name = e.target.name;
-    const setter = setters[name as keyof typeof setters];
-    if (setter) setter(value);
-  };
+  // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  //   e.preventDefault();
+  //   const value = e.target.value;
+  //   const name = e.target.name;
+  //   const setter = setters[name as keyof typeof setters];
+  //   if (setter) setter(value);
+  // };
 
   const handleKeyDown = (
     e: KeyboardEvent,
@@ -60,35 +57,34 @@ function Login() {
     }
   };
 
-  const handleErrors = () => {
-    for (const field of state) {
-      console.log(`[cs] [field]`, field);
-      if (!field) {
-        // const errorForField = errorMessage(field);
-        // setErrors({ ...errors, [field]: errorForField });
-      }
-    }
-  };
+  const joinRoom = async (data: any) => {
+    const { username, room, password } = data;
+    if (setUsername) setUsername(username);
+    if (setRoom) setRoom(room);
 
-  const errorMessage = (field: string) => {
-    return `Must provide a valid ${field}`;
-  };
-
-  const joinRoom = (data: any) => {
-    // e.preventDefault();
-    console.log(`[cs] data`, data);
-    handleErrors();
     const errorArray = Object.keys(errors);
 
     if (errorArray?.length === 0 && room && username && password) {
       try {
-        socket.emit("join_room", { username, room });
+        socket.emit("join_room", { username, room, password });
       } catch (e) {
         throw e;
       }
-      navigate("/story-time");
+
+      if (errorArray?.length === 0) {
+        navigate("/story-time");
+      }
     }
   };
+
+  console.log(`[cs] errors`, errors);
+
+  useEffect(() => {
+    socket.on("error", (error) => {
+      console.log(`[cs] error`, error);
+      setError("password", { type: "custom", message: error });
+    });
+  }, [socket]);
 
   const loginIntroText = `This is a simple web app that will allow you to make cool stories with a friend.\n\n\Simply create a simple username and join or create a room. Then you will each take it in turn to write sentences to a short story. \n\n\The only limitation is your own imagination. Go wild!`;
 
