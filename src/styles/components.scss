@@ -67,6 +67,10 @@
   align-items: center;
 }
 
+.form-input {
+  padding: 0;
+}
+
 .input-container label {
   position: absolute;
   pointer-events: none;
@@ -96,7 +100,7 @@
   padding: 1em 0.2em 0 0.2em;
   box-sizing: border-box;
   font-size: 16px;
-  margin-top: 1em;
+  margin-top: 1rem;
   font-family: "Courier Prime", sans-serif;
   -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
   -moz-box-sizing: border-box; /* Firefox, other Gecko */
