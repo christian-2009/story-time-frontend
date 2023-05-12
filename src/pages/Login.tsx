@@ -16,6 +16,7 @@ import { Errors, FormInputType } from 'interfaces';
 import { useForm } from 'react-hook-form';
 import FormInput from 'components/FormInput';
 import axios from 'axios';
+import Button from 'components/Button';
 
 function Login() {
     const navigate = useNavigate();
@@ -28,36 +29,13 @@ function Login() {
     } = useForm<FormInputType>({
         defaultValues: { username: '', password: '', room: '' },
     });
-    const roomRef = useRef<HTMLInputElement>(null);
     const passwordRef = useRef<HTMLInputElement>(null);
     const [loading, setLoading] = useState<boolean>(false);
     const { username, setUsername, room, setRoom } = useContext(UserContext);
 
-    // const setters = {
-    //   username: setUsername,
-    //   room: setRoom,
-    // };
-
     useEffect(() => {
         if (setRoom) setRoom('');
     }, []);
-
-    // const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    //   e.preventDefault();
-    //   const value = e.target.value;
-    //   const name = e.target.name;
-    //   const setter = setters[name as keyof typeof setters];
-    //   if (setter) setter(value);
-    // };
-
-    const handleKeyDown = (
-        e: KeyboardEvent,
-        ref: React.RefObject<HTMLInputElement>,
-    ) => {
-        if (e.key === 'Enter') {
-            ref.current?.focus();
-        }
-    };
 
     const joinRoom = async (data: any) => {
         setLoading(true);
@@ -91,13 +69,6 @@ function Login() {
         }
     };
 
-    useEffect(() => {
-        socket.on('error', error => {
-            console.log(`[cs] error`, error);
-            setError('password', { type: 'custom', message: error });
-        });
-    }, [socket]);
-
     const loginIntroText = `This is a simple web app that will allow you to make cool stories with a friend.\n\n\Simply create a simple username and join or create a room. Then you will each take it in turn to write sentences to a short story. \n\n\The only limitation is your own imagination. Go wild!`;
 
     return (
@@ -117,7 +88,6 @@ function Login() {
                         onSubmit={handleSubmit(joinRoom)}>
                         <FormInput
                             hasContent={dirtyFields.username}
-                            onKeyDown={e => handleKeyDown(e, roomRef)}
                             placeholder="Username"
                             errorsObject={{
                                 required: 'Username is required.',
@@ -128,7 +98,6 @@ function Login() {
                         />
                         <FormInput
                             hasContent={dirtyFields.room}
-                            onKeyDown={e => handleKeyDown(e, passwordRef)}
                             placeholder="Room"
                             register={register}
                             label="room"
@@ -154,12 +123,7 @@ function Login() {
                             error={errors.password?.message}
                         />
 
-                        <button
-                            className="login-button"
-                            type="submit"
-                            disabled={loading}>
-                            Join
-                        </button>
+                        <Button text="Join" type="submit" disabled={loading} />
                     </form>
                 </div>
             </div>
