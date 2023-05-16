@@ -1,12 +1,8 @@
-import React, { useContext } from "react";
-import { UsernameContextType } from "interfaces";
+import React, { useContext } from 'react';
+import { StoryContextType } from 'interfaces';
 
-const StoryContext = React.createContext<UsernameContextType>(
-  {} as UsernameContextType
-  //   username: "",
-  //   setUsername: undefined,
-  //   room: "",
-  //   setRoom: undefined,
+const StoryContext = React.createContext<StoryContextType>(
+    {} as StoryContextType,
 );
 
 export default StoryContext;

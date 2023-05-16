@@ -8,17 +8,16 @@ import Chat from './Chat';
 import { motion, useAnimate } from 'framer-motion';
 import { flushSync } from 'react-dom';
 import useMessages from 'hooks/useMessages';
+import StoryContext from 'context/StoryContext';
+import { counterTime } from './config';
 
 export default function Story() {
     const { username, room } = useContext(UserContext);
-    const [messagesContainerHeight, setMessagesContainerHeight] =
-        useState<number>();
-    const [pages, setPages] = useState<number[]>([1]);
-    const [story, setStory] = useState<string[]>([]);
-    const [scope, animate] = useAnimate();
     const firstRender = useRef(true);
     const messagesColumnRef = useRef<HTMLDivElement>(null);
     const { messagesReceived } = useMessages({ messagesColumnRef });
+    const [counter, setCounter] = useState(counterTime);
+    const [emitMessage, setEmitMessage] = useState<boolean>(false);
 
     useEffect(() => {
         if (firstRender.current) {
@@ -51,26 +50,29 @@ export default function Story() {
         },
     };
 
-    // useEffect(() => {
-    //   if (pages.length > 1) {
-    //     //TODO: figure out how to make this animation flexible
-    //     animate(
-    //       scope.current,
-    //       {
-    //         // x: 700,
-    //         y: -100,
-    //         left: "60%",
-    //         rotate: [0, Math.random() * 360],
-    //         scale: 0.3,
-    //         zIndex: 1,
-    //       },
-    //       { duration: 1 }
-    //     );
-    //   }
-    // }, [pages]);
+    useEffect(() => {
+        setCounter(counterTime);
+    }, [messagesReceived]);
+
+    useEffect(() => {
+        if (setCounter && counter) {
+            const timer =
+                counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+            return () => {
+                if (timer) clearInterval(timer);
+            };
+        }
+        if (counter === 0) {
+            setCounter(counterTime);
+        }
+    }, [counter]);
+
+    //NEED TO PASS COUNTER AND SETCOUNTER DOWN TO CHAT AND THEN RESET COUNTER ONCE MESSAGE IS SENT
+
+    console.log(`[cs] counter`, counter);
 
     return (
-        <>
+        <div className="story-container">
             <div className="story">
                 <div
                     className="story-messages-container"
@@ -133,30 +135,19 @@ export default function Story() {
                                         }}>
                                         {message.username}
                                     </Text.SmallText>
-                                    {/* <Text.SmallText
-                  optionalStyles={{ color: colorOption.textColor }}
-                >
-                  {formatDateFromTimestamp(message.__createdtime__)}
-                </Text.SmallText> */}
                                 </div>
                             </div>
                         );
                     })}
                 </div>
-                {/* <button
-          onClick={() =>
-           
-          }
-        >
-          click
-        </button> */}
 
-                <Chat messagesReceived={messagesReceived} />
+                <Chat
+                    messagesReceived={messagesReceived}
+                    setCounter={setCounter}
+                    counter={counter}
+                />
             </div>
-
-            {/* {pages.map(() => (
-        <div ref={scope} className="story-animation" />
-      ))} */}
-        </>
+            {counter && <Text.Subtitle>{counter.toString()}</Text.Subtitle>}
+        </div>
     );
 }

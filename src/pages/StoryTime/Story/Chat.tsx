@@ -5,16 +5,19 @@ import Text from 'components/Text';
 import TextArea from 'components/TextArea';
 import { MessagesType } from 'interfaces';
 import { getNextLetter } from 'utils';
+import { counterTime } from './config';
 
 interface Props {
     messagesReceived: MessagesType[];
+    setCounter: React.Dispatch<React.SetStateAction<number>>;
+    counter: number;
 }
 
 interface KeysPressedType {
     [index: string]: boolean;
 }
 
-export default function Chat({ messagesReceived }: Props) {
+export default function Chat({ messagesReceived, setCounter, counter }: Props) {
     const { username, room } = useContext(UserContext);
     const [isFocused, setIsFocused] = useState<boolean>(false);
     const [message, setMessage] = useState<string>();
@@ -39,10 +42,16 @@ export default function Chat({ messagesReceived }: Props) {
                 message,
                 __createdtime__,
             });
-
+            setCounter(counterTime);
             setMessage(m => getNextLetter(messagesReceived));
         }
     };
+
+    useEffect(() => {
+        if (counter === 0) {
+            onSubmit();
+        }
+    }, [counter]);
 
     const checkCommandAltPressed = () =>
         //TODO make it so that we can press alt unless there is only 1 message
@@ -80,8 +89,6 @@ export default function Chat({ messagesReceived }: Props) {
             if (mostRecentMessage?.username === username) return true;
         }
     };
-
-    console.log(`[cs] messagesReceived`, messagesReceived);
 
     return (
         <div className="chat">
