@@ -147,7 +147,11 @@ export default function Story() {
                     counter={counter}
                 />
             </div>
-            {counter && <Text.Subtitle>{counter.toString()}</Text.Subtitle>}
+            {counter && (
+                <Text.SansSerif optionalStyles={{ color: 'white' }}>
+                    {counter.toString()}
+                </Text.SansSerif>
+            )}
         </div>
     );
 }

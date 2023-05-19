@@ -1,110 +1,118 @@
 .title {
-  color: black;
-  align-self: flex-start;
-  margin: 0;
-  font-family: "Abril Fatface", sans-serif;
-  font-weight: 100;
-  font-size: calc(30px + 4vmax);
-  flex: 0 1 auto;
-  white-space: nowrap;
-  overflow: hidden;
+    color: black;
+    align-self: flex-start;
+    margin: 0;
+    font-family: 'Abril Fatface', sans-serif;
+    font-weight: 100;
+    font-size: calc(30px + 4vmax);
+    flex: 0 1 auto;
+    white-space: nowrap;
+    overflow: hidden;
 }
 .subtitle {
-  color: white;
-  margin: 0;
-  font-family: "Courier Prime", sans-serif;
-  font-weight: 100;
-  font-size: 2em;
+    color: white;
+    margin: 0;
+    font-family: 'Courier Prime', sans-serif;
+    font-weight: 100;
+    font-size: 2em;
 }
 
 .body {
-  font-family: "Courier Prime";
-  font-weight: 100;
-  color: white;
-  font-size: 1em;
-  width: fit-content;
+    font-family: 'Courier Prime';
+    font-weight: 100;
+    color: white;
+    font-size: 1em;
+    width: fit-content;
 }
 
 .body-large {
-  font-family: "Courier Prime";
-  font-weight: 100;
-  color: black;
-  font-size: 1.3rem;
-  width: fit-content;
+    font-family: 'Courier Prime';
+    font-weight: 100;
+    color: black;
+    font-size: 1.3rem;
+    width: fit-content;
 }
 .body-title-font {
-  font-family: "Abril Fatface";
-  font-weight: 100;
-  color: black;
-  font-size: 1.2em;
-  width: fit-content;
+    font-family: 'Abril Fatface';
+    font-weight: 100;
+    color: black;
+    font-size: 1.2em;
+    width: fit-content;
 }
 
 .small {
-  color: white;
-  margin: 0;
-  font-family: "Courier Prime", sans-serif;
-  font-weight: 100;
-  font-size: 0.9em;
-  width: fit-content;
+    color: white;
+    margin: 0;
+    font-family: 'Courier Prime', sans-serif;
+    font-weight: 100;
+    font-size: 0.9em;
+    width: fit-content;
 }
 
 .error-text {
-  color: #cc0000;
-  margin: 0;
-  font-family: sans-serif;
-  font-weight: 100;
-  font-size: 0.7rem;
-  width: fit-content;
+    color: #cc0000;
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: 100;
+    font-size: 0.7rem;
+    width: fit-content;
+}
+
+.sans-serif {
+    color: black;
+    margin: 0;
+    font-family: sans-serif;
+    font-weight: 100;
+    width: fit-content;
 }
 
 .input-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  position: relative;
-  justify-content: center;
-  align-items: center;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
 }
 
 .form-input {
-  padding: 0;
+    padding: 0;
 }
 
 .input-container label {
-  position: absolute;
-  pointer-events: none;
-  transform: translate(0, 0.5em) scale(1);
-  transform-origin: top left;
-  transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-  color: black;
-  font-family: "Courier Prime", sans-serif;
-  font-size: 16px;
-  left: 0.3em;
+    position: absolute;
+    pointer-events: none;
+    transform: translate(0, 0.5em) scale(1);
+    transform-origin: top left;
+    transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    color: black;
+    font-family: 'Courier Prime', sans-serif;
+    font-size: 16px;
+    left: 0.3em;
 }
 
 .input-container:focus-within label {
-  transform: translate(0, -0.1em) scale(0.75);
+    transform: translate(0, -0.1em) scale(0.75);
 }
 
 .input-container .active {
-  transform: translate(0, -0.1em) scale(0.75);
+    transform: translate(0, -0.1em) scale(0.75);
 }
 
 .login-input {
-  /* width: 60%; */
-  width: 100%;
-  height: 3em;
-  border-radius: 0.5em;
-  border-color: transparent;
-  padding: 1em 0.2em 0 0.2em;
-  box-sizing: border-box;
-  font-size: 16px;
-  margin-top: 1rem;
-  font-family: "Courier Prime", sans-serif;
-  -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-  -moz-box-sizing: border-box; /* Firefox, other Gecko */
-  box-sizing: border-box;
+    /* width: 60%; */
+    width: 100%;
+    height: 3em;
+    border-radius: 0.5em;
+    border-color: transparent;
+    padding: 1em 0.2em 0 0.2em;
+    box-sizing: border-box;
+    font-size: 16px;
+    margin-top: 1rem;
+    font-family: 'Courier Prime', sans-serif;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box; /* Firefox, other Gecko */
+    box-sizing: border-box;
 }
 
 // .login-input::content {
@@ -112,53 +120,53 @@
 // }
 
 .text-area {
-  width: 100%;
-  background-color: transparent;
-  border-color: transparent;
-  min-height: 60px;
-  height: 100%;
-  margin-top: 0;
-  padding: 0 0 0 0;
-  font-size: 1.3rem;
-  outline: none;
-  padding: 1px 0.5em 0 0.5em;
-  background-color: transparent;
+    width: 100%;
+    background-color: transparent;
+    border-color: transparent;
+    min-height: 60px;
+    height: 100%;
+    margin-top: 0;
+    padding: 0 0 0 0;
+    font-size: 1.3rem;
+    outline: none;
+    padding: 1px 0.5em 0 0.5em;
+    background-color: transparent;
 
-  resize: none;
+    resize: none;
 }
 
 .login-input:focus {
-  font-family: "Courier Prime", sans-serif;
-  outline: none;
+    font-family: 'Courier Prime', sans-serif;
+    outline: none;
 }
 
 .text-area-container {
-  width: 100%;
-  display: flex;
-  height: 100%;
+    width: 100%;
+    display: flex;
+    height: 100%;
 
-  flex-direction: column;
-  position: relative;
-  justify-content: center;
-  align-items: center;
+    flex-direction: column;
+    position: relative;
+    justify-content: center;
+    align-items: center;
 }
 
 .text-area-container label {
-  position: absolute;
-  pointer-events: none;
-  transform: translate(0, -3.5rem) scale(1);
-  transform-origin: top left;
-  transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
-  color: black;
-  font-family: "Courier Prime", sans-serif;
-  font-size: 1.3em;
-  left: 0em;
+    position: absolute;
+    pointer-events: none;
+    transform: translate(0, -3.5rem) scale(1);
+    transform-origin: top left;
+    transition: 200ms cubic-bezier(0, 0, 0.2, 1) 0ms;
+    color: black;
+    font-family: 'Courier Prime', sans-serif;
+    font-size: 1.3em;
+    left: 0em;
 }
 
 .text-area-container:focus-within label {
-  transform: translate(0, -4.1rem) scale(0.8);
+    transform: translate(0, -4.1rem) scale(0.8);
 }
 
 .text-area-container .active {
-  transform: translate(0, -4.1rem) scale(0.8);
+    transform: translate(0, -4.1rem) scale(0.8);
 }
