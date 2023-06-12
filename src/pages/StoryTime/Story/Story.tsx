@@ -15,8 +15,11 @@ export default function Story() {
     const { username, room } = useContext(UserContext);
     const firstRender = useRef(true);
     const messagesColumnRef = useRef<HTMLDivElement>(null);
-    const { messagesReceived } = useMessages({ messagesColumnRef });
+    const { messagesReceived, timerDetail, setTimerDetail } = useMessages({
+        messagesColumnRef,
+    });
     const [counter, setCounter] = useState(counterTime);
+
     const [emitMessage, setEmitMessage] = useState<boolean>(false);
 
     useEffect(() => {
@@ -51,11 +54,21 @@ export default function Story() {
     };
 
     useEffect(() => {
-        setCounter(counterTime);
+        const { startTimer, delay } = timerDetail;
+        if (startTimer) {
+            if (delay) {
+                setTimeout(() => {
+                    setCounter(counterTime);
+                }, delay);
+                setTimerDetail({ ...timerDetail, delay: undefined });
+            } else {
+                setCounter(counterTime);
+            }
+        }
     }, [messagesReceived]);
 
     useEffect(() => {
-        if (setCounter && counter) {
+        if (setCounter && counter && timerDetail.startTimer) {
             const timer =
                 counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
             return () => {
@@ -65,11 +78,7 @@ export default function Story() {
         if (counter === 0) {
             setCounter(counterTime);
         }
-    }, [counter]);
-
-    //NEED TO PASS COUNTER AND SETCOUNTER DOWN TO CHAT AND THEN RESET COUNTER ONCE MESSAGE IS SENT
-
-    console.log(`[cs] counter`, counter);
+    }, [counter, timerDetail]);
 
     return (
         <div className="story-container">
