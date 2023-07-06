@@ -100,6 +100,7 @@ export default function Chat({ messagesReceived, setCounter, counter }: Props) {
                 value={message}
                 placeholder={'Type Here'}
                 disabled={disableInput()}
+                optionalClass="story-time-text-area"
             />
         </div>
     );
