@@ -43,12 +43,12 @@ export default function Story() {
     const colorOptions = {
         [lowerCaseUsername]: {
             backgroundColor: 'transparent',
-            textColor: 'black',
+            textColor: 'whitesmoke',
             justifyContent: 'flex-end',
         },
         otherName: {
             backgroundColor: 'transparent',
-            textColor: '#6176a0',
+            textColor: '#BABABA',
             justifyContent: 'flex-start',
         },
     };

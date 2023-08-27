@@ -4,6 +4,10 @@ $background-color: #f0ead6;
 $primary-text: #3f0071;
 $secondary-text: #6176a0;
 
+$dark-grey: #3f3f3f;
+$light-grey: #c5c5c5;
+$text-color: whitesmoke;
+
 .container {
     height: 100%;
     display: flex;
@@ -51,7 +55,7 @@ $secondary-text: #6176a0;
     min-width: 100px;
     max-width: 800px;
     margin: 0 0 0 20%;
-    background-color: $background-color;
+    background-color: $dark-grey;
 
     // border-radius: 1em;
     // box-shadow: 5px 5px 20px rgb(0 0 0 / 0.4);
@@ -92,7 +96,7 @@ $secondary-text: #6176a0;
 }
 
 .border-top {
-    border-top: 2px solid $grey;
+    border-top: 2px solid $text-color;
 }
 
 .message {
@@ -119,4 +123,8 @@ $secondary-text: #6176a0;
     flex: 1 1 auto;
     display: flex;
     justify-content: flex-end;
+}
+
+.story-time-text-area {
+    color: $text-color;
 }

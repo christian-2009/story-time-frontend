@@ -78,7 +78,7 @@ function Login() {
                 <div className="input-containers">
                     <Text.Body
                         optionalStyles={{
-                            color: 'black',
+                            color: 'whitesmoke',
                             whiteSpace: 'pre-wrap',
                         }}>
                         {loginIntroText}
